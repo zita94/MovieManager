@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Assignment2</string>
+
+    <!-- Main Activity -->
+    <string name="title">Movies</string>
+    <string name="add_movies">Add Movies to DB</string>
+    <string name="search_for_movies">Search for Movies</string>
+    <string name="search_for_actors">Search for Actors</string>
+
 </resources>
