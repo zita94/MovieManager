@@ -7,4 +7,7 @@
     <string name="search_for_movies">Search for Movies</string>
     <string name="search_for_actors">Search for Actors</string>
 
+    <!-- Add Movies Activity -->
+    <string name="add_title">Add a Movie</string>
+
 </resources>
