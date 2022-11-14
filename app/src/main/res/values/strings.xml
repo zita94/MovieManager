@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Assignment2</string>
+    <string name="app_name">Movies</string>
 
     <!-- Main Activity -->
     <string name="title">Movies</string>
@@ -9,5 +9,16 @@
 
     <!-- Add Movies Activity -->
     <string name="add_title">Add a Movie</string>
+    <string name="add_movie_title">Title</string>
+    <string name="add_year">Year</string>
+    <string name="add_rated">Rated</string>
+    <string name="add_released">Released</string>
+    <string name="add_runtime">Runtime</string>
+    <string name="add_genre">Genre</string>
+    <string name="add_director">Director</string>
+    <string name="add_writer">Writer</string>
+    <string name="add_actors">Actors</string>
+    <string name="add_plot">Plot</string>
+    <string name="save">Save</string>
 
 </resources>
