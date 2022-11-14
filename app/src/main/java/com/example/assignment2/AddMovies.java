@@ -52,6 +52,18 @@ public class AddMovies extends AppCompatActivity {
         
         Movie movie = new Movie();
         movie.setTitle(title.getText().toString());
+
+        int intYear = Integer.parseInt(year.getText().toString());
+        movie.setYear(intYear);
+
+        movie.setRated(rated.getText().toString());
+        movie.setReleased(released.getText().toString());
+        movie.setRuntime(runtime.getText().toString());
+        movie.setGenre(genre.getText().toString());
+        movie.setDirector(director.getText().toString());
+        movie.setWriter(writer.getText().toString());
+        movie.setActors(actors.getText().toString());
+        movie.setPlot(plot.getText().toString());
         
         new Thread(new Runnable() {
             @Override
