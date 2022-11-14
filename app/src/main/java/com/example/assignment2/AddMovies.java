@@ -3,27 +3,25 @@ package com.example.assignment2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.List;
 
 public class AddMovies extends AppCompatActivity {
     MovieDatabase movieDatabase;
     MovieDao movieDao;
 
-    EditText title;
-    EditText year;
-    EditText rated;
-    EditText released;
-    EditText runtime;
-    EditText genre;
-    EditText director; 
-    EditText writer;
-    EditText actors;
-    EditText plot;
+    EditText title_et;
+    EditText year_et;
+    EditText rated_et;
+    EditText released_et;
+    EditText runtime_et;
+    EditText genre_et;
+    EditText director_et;
+    EditText writer_et;
+    EditText actors_et;
+    EditText plot_et;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,53 +33,138 @@ public class AddMovies extends AppCompatActivity {
         movieDatabase = MovieDatabase.getMovieDatabase(getApplicationContext());
         movieDao = movieDatabase.movieDao();
 
-        title = findViewById(R.id.add_et_title);
-        year = findViewById(R.id.add_et_year);
-        rated = findViewById(R.id.add_et_rated);
-        released = findViewById(R.id.add_et_released);
-        runtime = findViewById(R.id.add_et_runtime);
-        genre = findViewById(R.id.add_et_genre);
-        director = findViewById(R.id.add_et_director);
-        writer = findViewById(R.id.add_et_writer);
-        actors = findViewById(R.id.add_et_actors);
-        plot = findViewById(R.id.add_et_plot);
+        title_et = findViewById(R.id.add_et_title);
+        year_et = findViewById(R.id.add_et_year);
+        rated_et = findViewById(R.id.add_et_rated);
+        released_et = findViewById(R.id.add_et_released);
+        runtime_et = findViewById(R.id.add_et_runtime);
+        genre_et = findViewById(R.id.add_et_genre);
+        director_et = findViewById(R.id.add_et_director);
+        writer_et = findViewById(R.id.add_et_writer);
+        actors_et = findViewById(R.id.add_et_actors);
+        plot_et = findViewById(R.id.add_et_plot);
     }
 
     public void saveOnClick(View view) {
-        // validation of form
-        
+        String title = title_et.getText().toString();
+        String rated = rated_et.getText().toString();
+        String released = released_et.getText().toString();
+        String runtime = runtime_et.getText().toString();
+        String genre = genre_et.getText().toString();
+        String director = director_et.getText().toString();
+        String writer = writer_et.getText().toString();
+        String actors = actors_et.getText().toString();
+        String plot = plot_et.getText().toString();
+
+        // form validation
+        boolean invalidInput = false;
+
+        if (TextUtils.isEmpty(title)) {
+            title_et.setError("Title cannot be empty");
+            title_et.requestFocus();
+            invalidInput = true;
+        }
+
+        int intYear = -1;
+        try {
+            intYear = Integer.parseInt(year_et.getText().toString());
+        } catch (Exception e) {
+            year_et.setError("Year must be an integer");
+            year_et.requestFocus();
+            invalidInput = true;
+        }
+
+        if (TextUtils.isEmpty(rated)) {
+            rated_et.setError("Rated cannot be empty");
+            rated_et.requestFocus();
+            invalidInput = true;
+        }
+
+        if (TextUtils.isEmpty(released)) {
+            released_et.setError("Released cannot be empty");
+            released_et.requestFocus();
+            invalidInput = true;
+        }
+
+        if (TextUtils.isEmpty(runtime)) {
+            runtime_et.setError("Runtime cannot be empty");
+            runtime_et.requestFocus();
+            invalidInput = true;
+        }
+
+        if (TextUtils.isEmpty(genre)) {
+            genre_et.setError("Genre cannot be empty");
+            genre_et.requestFocus();
+            invalidInput = true;
+        }
+
+        if (TextUtils.isEmpty(director)) {
+            director_et.setError("Director cannot be empty");
+            director_et.requestFocus();
+            invalidInput = true;
+        }
+
+        if (TextUtils.isEmpty(writer)) {
+            writer_et.setError("Writer cannot be empty");
+            writer_et.requestFocus();
+            invalidInput = true;
+        }
+
+        if (TextUtils.isEmpty(actors)) {
+            actors_et.setError("Actors cannot be empty");
+            actors_et.requestFocus();
+            invalidInput = true;
+        }
+
+        if (TextUtils.isEmpty(plot)) {
+            plot_et.setError("Plot cannot be empty");
+            plot_et.requestFocus();
+            invalidInput = true;
+        }
+
+        if (invalidInput) {
+            return;
+        }
+
         Movie movie = new Movie();
-        movie.setTitle(title.getText().toString());
-
-        int intYear = Integer.parseInt(year.getText().toString());
+        movie.setTitle(title);
         movie.setYear(intYear);
+        movie.setRated(rated);
+        movie.setReleased(released);
+        movie.setRuntime(runtime);
+        movie.setGenre(genre);
+        movie.setDirector(director);
+        movie.setWriter(writer);
+        movie.setActors(actors);
+        movie.setPlot(plot);
 
-        movie.setRated(rated.getText().toString());
-        movie.setReleased(released.getText().toString());
-        movie.setRuntime(runtime.getText().toString());
-        movie.setGenre(genre.getText().toString());
-        movie.setDirector(director.getText().toString());
-        movie.setWriter(writer.getText().toString());
-        movie.setActors(actors.getText().toString());
-        movie.setPlot(plot.getText().toString());
-        
         new Thread(new Runnable() {
             @Override
             public void run() {
-                
+
                 movieDao.addMovie(movie);
-                
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(AddMovies.this, "Movie added", Toast.LENGTH_SHORT).show();
-                        TextView tv = findViewById(R.id.textView);
-                        //List<Movie> movieList = movieDao.getAllMovies();
-                        //String movies = movieList.toString();
-                        //tv.setText(movies);
+                        Toast.makeText(AddMovies.this, movie.title + " has been saved", Toast.LENGTH_LONG).show();
+                        resetForm();
                     }
                 });
             }
         }).start();
+    }
+
+    private void resetForm() {
+        title_et.setText("");
+        year_et.setText("");
+        rated_et.setText("");
+        released_et.setText("");
+        runtime_et.setText("");
+        genre_et.setText("");
+        director_et.setText("");
+        writer_et.setText("");
+        actors_et.setText("");
+        plot_et.setText("");
     }
 }
