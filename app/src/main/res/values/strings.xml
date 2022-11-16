@@ -21,4 +21,7 @@
     <string name="add_plot">Plot</string>
     <string name="save">Save</string>
 
+    <!-- Search for Movies Activity -->
+    <string name="search">Search for a Movie</string>
+
 </resources>

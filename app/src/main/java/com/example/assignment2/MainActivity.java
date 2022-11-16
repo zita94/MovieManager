@@ -24,5 +24,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button searchForMoviesBtn = findViewById(R.id.main_button_search_movies);
+        searchForMoviesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (MainActivity.this, SearchMovies.class);
+                startActivity(intent);
+            }
+        });
     }
 }
