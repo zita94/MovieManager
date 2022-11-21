@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,6 +23,9 @@ public class SearchMovies extends AppCompatActivity {
     EditText movieTitleEt;
     TextView movieDetails;
     String url;
+    MovieDatabase movieDatabase;
+    MovieDao movieDao;
+    Movie movie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,10 @@ public class SearchMovies extends AppCompatActivity {
         getSupportActionBar().setTitle("");
 
         movieDetails = findViewById(R.id.searchmovies_movieDetails);
+
+        movieDatabase = MovieDatabase.getMovieDatabase(getApplicationContext());
+        movieDao = movieDatabase.movieDao();
+        movie = new Movie();
     }
 
     public void retrieveMovieOnClick(View view) {
@@ -40,7 +48,21 @@ public class SearchMovies extends AppCompatActivity {
     }
 
     public void saveMovieOnClick(View view) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
 
+                movieDao.addMovie(movie);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(SearchMovies.this, movie.title +
+                                " has been saved", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        }).start();
     }
 
     private void getMovieData(String url) {
@@ -70,6 +92,25 @@ public class SearchMovies extends AppCompatActivity {
 
                     System.out.println("Title= " + title);
                     System.out.println(response);
+
+                    movie.setTitle(title);
+
+                    int intYear = 0;
+                    try {
+                        intYear = Integer.parseInt(year);
+                    } catch (Exception e) {
+                        System.out.println("Unable to parse year");
+                    }
+
+                    movie.setYear(intYear);
+                    movie.setRated(rated);
+                    movie.setReleased(released);
+                    movie.setRuntime(runtime);
+                    movie.setGenre(genre);
+                    movie.setDirector(director);
+                    movie.setWriter(writer);
+                    movie.setActors(actors);
+                    movie.setPlot(plot);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
