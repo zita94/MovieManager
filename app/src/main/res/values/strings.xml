@@ -27,4 +27,7 @@
     <string name="retrieve_button">Retrieve Movie</string>
     <string name="save_movie_button">Save Movie to Database</string>
 
+    <!-- Search for Actors Activity -->
+    <string name="search_actors_prompt">Enter an actors name</string>
+    <string name="search_actors_search">Search</string>
 </resources>

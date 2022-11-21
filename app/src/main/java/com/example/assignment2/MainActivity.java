@@ -33,5 +33,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button searchForActorsBtn = findViewById(R.id.main_button_search_actors);
+        searchForActorsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SearchActors.class);
+                startActivity(intent);
+            }
+        });
     }
 }
