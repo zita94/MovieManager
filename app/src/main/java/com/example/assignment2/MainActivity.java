@@ -42,5 +42,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button advancedBtn = findViewById(R.id.main_button_advanced);
+        advancedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Advanced.class);
+                startActivity(intent);
+            }
+        });
     }
 }
