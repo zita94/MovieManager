@@ -8,6 +8,7 @@
     <string name="search_for_movies">Search for Movies</string>
     <string name="search_for_actors">Search for Actors</string>
     <string name="advanced_level">Advanced Level</string>
+    <string name="search">Search</string>
 
     <!-- Add Movies Activity -->
     <string name="add_title">Add a Movie</string>
@@ -30,8 +31,8 @@
 
     <!-- Search for Actors Activity -->
     <string name="search_actors_prompt">Enter an actors name</string>
-    <string name="search_actors_search">Search</string>
 
     <!-- Advanced Activity -->
     <string name="advanced_title">Search for Actors</string>
+    <string name="advanced_prompt">Enter a movie title</string>
 </resources>
