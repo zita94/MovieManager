@@ -22,7 +22,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +29,6 @@ public class Advanced extends AppCompatActivity {
     EditText titleEt;
     RecyclerView recyclerView;
     CellAdapter adapter;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +72,7 @@ public class Advanced extends AppCompatActivity {
                     String total = response.getString("totalResults");
                     System.out.println("Total " + total);
 
-                    initData(titles);
+                    setTitlesInRecycler(titles);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     if (e.getMessage().equals("No value for Search")) {
@@ -95,7 +92,7 @@ public class Advanced extends AppCompatActivity {
         queue.add(jsonObjectRequest);
     }
 
-    private void initData(List<String> titles) {
+    private void setTitlesInRecycler(List<String> titles) {
         adapter = new CellAdapter(this, titles);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);

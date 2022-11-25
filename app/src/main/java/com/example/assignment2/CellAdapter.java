@@ -35,6 +35,7 @@ public class CellAdapter extends RecyclerView.Adapter<CellHolder> {
             @Override
             public void onClick(View view) {
                 // perform API call to get movie image
+
             }
         });
     }
