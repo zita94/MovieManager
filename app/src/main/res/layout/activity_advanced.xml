@@ -41,4 +41,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/advanced_enterTitle" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/advanced_recycler"
+        android:layout_width="358dp"
+        android:layout_height="465dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/advanced_search"
+        android:scrollbars="vertical"
+        android:scrollbarDefaultDelayBeforeFade=""/>
 </androidx.constraintlayout.widget.ConstraintLayout>

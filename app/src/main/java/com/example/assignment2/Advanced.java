@@ -1,6 +1,8 @@
 package com.example.assignment2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -19,9 +21,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Advanced extends AppCompatActivity {
     EditText titleEt;
+    RecyclerView recyclerView;
+    CellAdapter adapter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +39,7 @@ public class Advanced extends AppCompatActivity {
         getSupportActionBar().setTitle("");
 
         titleEt = findViewById(R.id.advanced_enterTitle);
+        recyclerView = findViewById(R.id.advanced_recycler);
     }
 
     public void searchOnClick(View view) {
@@ -47,15 +56,18 @@ public class Advanced extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     JSONArray results = response.getJSONArray("Search");
+                    List<String> titles = new ArrayList<>();
                     for (int i = 0; i < results.length(); i++) {
                         JSONObject movie = results.getJSONObject(i);
                         String title = movie.getString("Title");
                         System.out.println("Title: " + title);
+                        titles.add(title);
                     }
 
                     String total = response.getString("totalResults");
                     System.out.println("Total " + total);
 
+                    initData(titles);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -67,5 +79,11 @@ public class Advanced extends AppCompatActivity {
             }
         });
         queue.add(jsonObjectRequest);
+    }
+
+    private void initData(List<String> titles) {
+        adapter = new CellAdapter(this, titles);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
     }
 }
