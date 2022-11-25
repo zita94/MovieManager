@@ -5,9 +5,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -44,6 +46,12 @@ public class Advanced extends AppCompatActivity {
 
     public void searchOnClick(View view) {
         String movieTitle = titleEt.getText().toString();
+
+        if (TextUtils.isEmpty(movieTitle)) {
+            Toast.makeText(this, "Please enter a search term", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String url = "https://www.omdbapi.com/?s=*" + movieTitle + "*&apikey=" + getResources().getString(R.string.API_key);
         getMovieData(url);
     }
@@ -70,6 +78,12 @@ public class Advanced extends AppCompatActivity {
                     initData(titles);
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    if (e.getMessage().equals("No value for Search")) {
+                        Toast.makeText(Advanced.this, "Zero results match your current search",
+                                Toast.LENGTH_SHORT).show();
+
+                        adapter.emptyList();
+                    }
                 }
             }
         }, new Response.ErrorListener() {

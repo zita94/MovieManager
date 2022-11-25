@@ -51,6 +51,5 @@
         app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/advanced_search"
-        android:scrollbars="vertical"
-        android:scrollbarDefaultDelayBeforeFade=""/>
+        android:scrollbars="vertical"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

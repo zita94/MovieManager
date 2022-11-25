@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CellAdapter extends RecyclerView.Adapter<CellHolder> {
@@ -41,5 +42,10 @@ public class CellAdapter extends RecyclerView.Adapter<CellHolder> {
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public void emptyList() {
+        list = new ArrayList<>();
+        notifyDataSetChanged();;
     }
 }
