@@ -29,6 +29,13 @@ public class CellAdapter extends RecyclerView.Adapter<CellHolder> {
     @Override
     public void onBindViewHolder(@NonNull CellHolder holder, int position) {
         holder.title.setText(list.get(position));
+
+        holder.title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // perform API call to get movie image
+            }
+        });
     }
 
     @Override
