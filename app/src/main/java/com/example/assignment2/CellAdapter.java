@@ -14,10 +14,12 @@ import java.util.List;
 public class CellAdapter extends RecyclerView.Adapter<CellHolder> {
     private Context context;
     List<String> list;
+    iMovieTitleOnClickListener titleOnClickListener;
 
-    public CellAdapter(Context context, List<String> titles){
+    public CellAdapter(Context context, List<String> titles, iMovieTitleOnClickListener onTitleClick){
         this.context = context;
         this.list = titles;
+        this.titleOnClickListener = onTitleClick;
     }
 
     @NonNull
@@ -35,7 +37,7 @@ public class CellAdapter extends RecyclerView.Adapter<CellHolder> {
             @Override
             public void onClick(View view) {
                 // perform API call to get movie image
-
+                titleOnClickListener.onTitleClick();
             }
         });
     }

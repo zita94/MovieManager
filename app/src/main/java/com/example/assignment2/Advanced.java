@@ -25,7 +25,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Advanced extends AppCompatActivity {
+public class Advanced extends AppCompatActivity implements iMovieTitleOnClickListener {
     EditText titleEt;
     RecyclerView recyclerView;
     CellAdapter adapter;
@@ -93,8 +93,14 @@ public class Advanced extends AppCompatActivity {
     }
 
     private void setTitlesInRecycler(List<String> titles) {
-        adapter = new CellAdapter(this, titles);
+        adapter = new CellAdapter(this, titles, this::onTitleClick);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+    }
+
+
+    @Override
+    public void onTitleClick() {
+        // on movie title click logic for getting movie poster
     }
 }
