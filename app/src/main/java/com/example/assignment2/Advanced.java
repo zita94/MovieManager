@@ -100,7 +100,32 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
 
 
     @Override
-    public void onTitleClick() {
+    public void onTitleClick(String title) {
         // on movie title click logic for getting movie poster
+        String url = "https://www.omdbapi.com/?t=" + title + "&apikey=" + getResources().getString(R.string.API_key);
+        getMoviePoster(url);
+    }
+
+    private void getMoviePoster(String url) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,
+                null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    String poster = response.getString("Poster");
+                    System.out.println("Poster: " + poster);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Volley Error Response", error.getMessage(), error);
+            }
+        });
+        queue.add(jsonObjectRequest);
     }
 }
