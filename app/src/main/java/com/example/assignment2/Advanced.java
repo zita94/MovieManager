@@ -1,9 +1,5 @@
 package com.example.assignment2;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -14,10 +10,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -34,6 +32,7 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
     EditText titleEt;
     RecyclerView recyclerView;
     CellAdapter adapter;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +43,7 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
 
         titleEt = findViewById(R.id.advanced_enterTitle);
         recyclerView = findViewById(R.id.advanced_recycler);
+        imageView = findViewById(R.id.advanced_image);
     }
 
     public void searchOnClick(View view) {
@@ -61,39 +61,31 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
     private void getMovieData(String url) {
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,
-                null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray results = response.getJSONArray("Search");
-                    List<String> titles = new ArrayList<>();
-                    for (int i = 0; i < results.length(); i++) {
-                        JSONObject movie = results.getJSONObject(i);
-                        String title = movie.getString("Title");
-                        System.out.println("Title: " + title);
-                        titles.add(title);
+                null, response -> {
+                    try {
+                        JSONArray results = response.getJSONArray("Search");
+                        List<String> titles = new ArrayList<>();
+                        for (int i = 0; i < results.length(); i++) {
+                            JSONObject movie = results.getJSONObject(i);
+                            String title = movie.getString("Title");
+                            System.out.println("Title: " + title);
+                            titles.add(title);
+                        }
+
+                        String total = response.getString("totalResults");
+                        System.out.println("Total " + total);
+
+                        setTitlesInRecycler(titles);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        if (e.getMessage().equals("No value for Search")) {
+                            Toast.makeText(Advanced.this, "Zero results match your current search",
+                                    Toast.LENGTH_SHORT).show();
+
+                            adapter.emptyList();
+                        }
                     }
-
-                    String total = response.getString("totalResults");
-                    System.out.println("Total " + total);
-
-                    setTitlesInRecycler(titles);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    if (e.getMessage().equals("No value for Search")) {
-                        Toast.makeText(Advanced.this, "Zero results match your current search",
-                                Toast.LENGTH_SHORT).show();
-
-                        adapter.emptyList();
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Volley Error Response", error.getMessage(), error);
-            }
-        });
+                }, error -> Log.d("Volley Error Response", error.getMessage(), error));
         queue.add(jsonObjectRequest);
     }
 
@@ -126,8 +118,8 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
                                 Bitmap imageBitmap = BitmapFactory.decodeStream(url1.openConnection()
                                         .getInputStream());
 
-                                ImageView image = findViewById(R.id.advanced_image);
-                                runOnUiThread(() -> image.setImageBitmap(imageBitmap));
+                                recyclerView.setVisibility(View.INVISIBLE);
+                                runOnUiThread(() -> imageView.setImageBitmap(imageBitmap));
                             } catch(IOException e) {
                                 e.printStackTrace();
                             }
@@ -140,5 +132,13 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
                 }, error -> Log.d("Volley Error Response", error.getMessage(), error));
 
         queue.add(jsonObjectRequest);
+    }
+
+    public void imageViewOnClick(View view) {
+        // hide image view when clicked
+        imageView.setImageDrawable(null);
+
+        // show recycler when image is hidden
+        recyclerView.setVisibility(View.VISIBLE);
     }
 }

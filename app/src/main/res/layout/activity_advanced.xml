@@ -42,6 +42,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/advanced_enterTitle" />
 
+    <ImageView
+        android:id="@+id/advanced_image"
+        android:layout_width="265dp"
+        android:layout_height="313dp"
+        android:layout_marginTop="68dp"
+        android:onClick="imageViewOnClick"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/advanced_search"
+        tools:srcCompat="@tools:sample/avatars" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/advanced_recycler"
         android:layout_width="358dp"
@@ -53,13 +64,4 @@
         app:layout_constraintTop_toBottomOf="@+id/advanced_search"
         android:scrollbars="vertical"/>
 
-    <ImageView
-        android:id="@+id/advanced_image"
-        android:layout_width="265dp"
-        android:layout_height="313dp"
-        android:layout_marginTop="68dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/advanced_search"
-        tools:srcCompat="@tools:sample/avatars" />
 </androidx.constraintlayout.widget.ConstraintLayout>
