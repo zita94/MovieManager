@@ -47,7 +47,7 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
     }
 
     public void searchOnClick(View view) {
-        String movieTitle = titleEt.getText().toString();
+        String movieTitle = titleEt.getText().toString().trim();
 
         if (TextUtils.isEmpty(movieTitle)) {
             Toast.makeText(this, "Please enter a search term", Toast.LENGTH_SHORT).show();
@@ -93,6 +93,11 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
         adapter = new CellAdapter(this, titles, this::onTitleClick);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+
+        if (recyclerView.getVisibility() == View.INVISIBLE) {
+            imageView.setImageDrawable(null);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
 
