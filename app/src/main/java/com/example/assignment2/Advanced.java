@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -22,6 +25,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,23 +114,31 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
     private void getMoviePoster(String url) {
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,
-                null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    String poster = response.getString("Poster");
-                    System.out.println("Poster: " + poster);
+                null, response -> {
+                    try {
+                        String posterUrl = response.getString("Poster");
+                        System.out.println("Poster: " + posterUrl);
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Volley Error Response", error.getMessage(), error);
-            }
-        });
+                        // opening URL connection on worker thread to not hang the UI
+                        Thread decodeImage = new Thread(() -> {
+                            try {
+                                URL url1 = new URL(posterUrl);
+                                Bitmap imageBitmap = BitmapFactory.decodeStream(url1.openConnection()
+                                        .getInputStream());
+
+                                ImageView image = findViewById(R.id.advanced_image);
+                                runOnUiThread(() -> image.setImageBitmap(imageBitmap));
+                            } catch(IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                        decodeImage.start();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }, error -> Log.d("Volley Error Response", error.getMessage(), error));
+
         queue.add(jsonObjectRequest);
     }
 }
