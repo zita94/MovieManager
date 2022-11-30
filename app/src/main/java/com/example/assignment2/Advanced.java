@@ -54,7 +54,7 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
             return;
         }
 
-        String url = "https://www.omdbapi.com/?s=*" + movieTitle + "*&apikey=" + getResources().getString(R.string.API_key);
+        String url = getString(R.string.base_url) + "?s=*" + movieTitle + "*&apikey=" + getResources().getString(R.string.API_key);
         getMovieData(url);
     }
 
@@ -104,7 +104,7 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
     @Override
     public void onTitleClick(String title) {
         // on movie title click logic for getting movie poster
-        String url = "https://www.omdbapi.com/?t=" + title + "&apikey=" + getResources().getString(R.string.API_key);
+        String url = getString(R.string.base_url) + "?t=" + title + "&apikey=" + getResources().getString(R.string.API_key);
         getMoviePoster(url);
     }
 

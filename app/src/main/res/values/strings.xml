@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Movies</string>
     <string name="API_key">ae6aa4d2</string>
+    <string name="base_url">https://www.omdbapi.com/</string>
 
     <!-- Main Activity -->
     <string name="title">Movies</string>
