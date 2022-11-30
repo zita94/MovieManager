@@ -47,6 +47,7 @@ public class AddMovies extends AppCompatActivity {
 
     public void saveOnClick(View view) {
         String title = title_et.getText().toString();
+        String year = year_et.getText().toString();
         String rated = rated_et.getText().toString();
         String released = released_et.getText().toString();
         String runtime = runtime_et.getText().toString();
@@ -57,72 +58,71 @@ public class AddMovies extends AppCompatActivity {
         String plot = plot_et.getText().toString();
 
         // form validation
-        boolean invalidInput = false;
-
         if (TextUtils.isEmpty(title)) {
             title_et.setError("Title cannot be empty");
             title_et.requestFocus();
-            invalidInput = true;
+            return;
         }
 
         int intYear = -1;
         try {
-            intYear = Integer.parseInt(year_et.getText().toString());
+            if (TextUtils.isEmpty(year.trim())) {
+                year_et.setError("Year cannot be empty");
+                year_et.requestFocus();
+                return;
+            }
+            intYear = Integer.parseInt(year);
         } catch (Exception e) {
             year_et.setError("Year must be an integer");
             year_et.requestFocus();
-            invalidInput = true;
+            return;
         }
 
         if (TextUtils.isEmpty(rated)) {
             rated_et.setError("Rated cannot be empty");
             rated_et.requestFocus();
-            invalidInput = true;
+            return;
         }
 
         if (TextUtils.isEmpty(released)) {
             released_et.setError("Released cannot be empty");
             released_et.requestFocus();
-            invalidInput = true;
+            return;
         }
 
         if (TextUtils.isEmpty(runtime)) {
             runtime_et.setError("Runtime cannot be empty");
             runtime_et.requestFocus();
-            invalidInput = true;
+            return;
         }
 
         if (TextUtils.isEmpty(genre)) {
             genre_et.setError("Genre cannot be empty");
             genre_et.requestFocus();
-            invalidInput = true;
+            return;
         }
 
         if (TextUtils.isEmpty(director)) {
             director_et.setError("Director cannot be empty");
             director_et.requestFocus();
-            invalidInput = true;
+            return;
         }
 
         if (TextUtils.isEmpty(writer)) {
             writer_et.setError("Writer cannot be empty");
             writer_et.requestFocus();
-            invalidInput = true;
+            return;
         }
 
         if (TextUtils.isEmpty(actors)) {
             actors_et.setError("Actors cannot be empty");
             actors_et.requestFocus();
-            invalidInput = true;
+            return;
         }
 
         if (TextUtils.isEmpty(plot)) {
             plot_et.setError("Plot cannot be empty");
             plot_et.requestFocus();
-            invalidInput = true;
-        }
-
-        if (invalidInput) {
             return;
         }
 
