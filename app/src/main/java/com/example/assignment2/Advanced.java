@@ -34,6 +34,7 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
     RecyclerView recyclerView;
     CellAdapter adapter;
     ImageView imageView;
+    ArrayList<String> titles = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,6 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
                 null, response -> {
             try {
                 JSONArray results = response.getJSONArray("Search");
-                List<String> titles = new ArrayList<>();
                 for (int i = 0; i < results.length(); i++) {
                     JSONObject movie = results.getJSONObject(i);
                     String title = movie.getString("Title");
@@ -77,6 +77,11 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
                 System.out.println("Total " + total);
 
                 setTitlesInRecycler(titles);
+
+                if (recyclerView.getVisibility() == View.INVISIBLE) {
+                    imageView.setImageDrawable(null);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
                 if (e.getMessage().equals("No value for Search")) {
@@ -94,11 +99,6 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
         adapter = new CellAdapter(this, titles, this::onTitleClick);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-
-        if (recyclerView.getVisibility() == View.INVISIBLE) {
-            imageView.setImageDrawable(null);
-            recyclerView.setVisibility(View.VISIBLE);
-        }
     }
 
 
@@ -145,8 +145,7 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
         try {
             URL url1 = new URL(url);
             imageBitmap = BitmapFactory.decodeStream(url1.openConnection().getInputStream());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
@@ -157,6 +156,7 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
     public void imageViewOnClick(View view) {
         // hide image view when clicked
         imageView.setImageDrawable(null);
+        imageView.setTag(null);
 
         // show recycler when image is hidden
         recyclerView.setVisibility(View.VISIBLE);
@@ -165,13 +165,28 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("imageUrl", imageView.getTag().toString());
+        try {
+            outState.putString("imageUrl", imageView.getTag().toString());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        outState.putStringArrayList("titles", titles);
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        String url = savedInstanceState.getString("imageUrl");
-        setImageFromUrl(url);
+        if (savedInstanceState.containsKey("imageUrl")) {
+            String url = savedInstanceState.getString("imageUrl");
+            setImageFromUrl(url);
+
+            recyclerView.setVisibility(View.INVISIBLE);
+        }
+
+        if (savedInstanceState.containsKey("titles")) {
+            ArrayList<String> tempTitles = savedInstanceState.getStringArrayList("titles");
+            setTitlesInRecycler(tempTitles);
+            titles = tempTitles;
+        }
     }
 }
