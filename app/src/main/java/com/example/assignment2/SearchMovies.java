@@ -1,5 +1,6 @@
 package com.example.assignment2;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -122,5 +123,20 @@ public class SearchMovies extends AppCompatActivity {
             }
         });
         queue.add(jsonObjectRequest);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("details", movieDetails.getText().toString());
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState.containsKey("details")) {
+            movieDetails.setText(savedInstanceState.getString("details"));
+        }
     }
 }
