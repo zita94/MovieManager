@@ -7,8 +7,8 @@
     tools:context=".SearchActors">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="729dp"
-        android:layout_height="215dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="195dp">
 
