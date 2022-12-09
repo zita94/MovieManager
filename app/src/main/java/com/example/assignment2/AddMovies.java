@@ -147,7 +147,8 @@ public class AddMovies extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(AddMovies.this, movie.title + " has been saved", Toast.LENGTH_LONG).show();
+                        Toast.makeText(AddMovies.this, movie.title + " has been saved",
+                                Toast.LENGTH_LONG).show();
                         resetForm();
                     }
                 });

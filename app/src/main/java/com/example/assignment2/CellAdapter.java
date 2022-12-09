@@ -16,7 +16,8 @@ public class CellAdapter extends RecyclerView.Adapter<CellHolder> {
     List<String> titles;
     iMovieTitleOnClickListener titleOnClickListener;
 
-    public CellAdapter(Context context, List<String> titles, iMovieTitleOnClickListener onTitleClick){
+    public CellAdapter(Context context, List<String> titles,
+                       iMovieTitleOnClickListener onTitleClick){
         this.context = context;
         this.titles = titles;
         this.titleOnClickListener = onTitleClick;

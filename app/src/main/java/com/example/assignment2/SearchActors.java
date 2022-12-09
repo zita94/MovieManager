@@ -49,7 +49,8 @@ public class SearchActors extends AppCompatActivity {
                             result += row;
                         }
                         results.setText(result);
-                        Toast.makeText(SearchActors.this, "count: " + movies.size(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SearchActors.this, "count: " +
+                                movies.size(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
