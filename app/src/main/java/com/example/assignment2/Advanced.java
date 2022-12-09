@@ -52,11 +52,13 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
         String movieTitle = titleEt.getText().toString().trim();
 
         if (TextUtils.isEmpty(movieTitle)) {
-            Toast.makeText(this, "Please enter a search term", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter a search term",
+                    Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String url = getString(R.string.base_url) + "?s=*" + movieTitle + "*&apikey=" + getResources().getString(R.string.API_key);
+        String url = getString(R.string.base_url) + "?s=*" + movieTitle + "*&apikey="
+                + getResources().getString(R.string.API_key);
         getMovieData(url);
     }
 
@@ -85,7 +87,8 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
             } catch (JSONException e) {
                 e.printStackTrace();
                 if (e.getMessage().equals("No value for Search")) {
-                    Toast.makeText(Advanced.this, "Zero results match your current search",
+                    Toast.makeText(Advanced.this,
+                            "Zero results match your current search",
                             Toast.LENGTH_SHORT).show();
 
                     adapter.emptyList();
@@ -101,11 +104,11 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
         recyclerView.setAdapter(adapter);
     }
 
-
     @Override
     public void onTitleClick(String title) {
         // on movie title click logic for getting movie poster
-        String url = getString(R.string.base_url) + "?t=" + title + "&apikey=" + getResources().getString(R.string.API_key);
+        String url = getString(R.string.base_url) + "?t=" + title + "&apikey=" +
+                getResources().getString(R.string.API_key);
         getMoviePoster(url);
     }
 
@@ -140,11 +143,11 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
         }
     }
 
-    private Bitmap getBitmapFromUrl(String url) {
+    private Bitmap getBitmapFromUrl(String posterUrl) {
         Bitmap imageBitmap = null;
         try {
-            URL url1 = new URL(url);
-            imageBitmap = BitmapFactory.decodeStream(url1.openConnection().getInputStream());
+            URL url = new URL(posterUrl);
+            imageBitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
