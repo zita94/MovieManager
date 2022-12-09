@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,10 +24,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class Advanced extends AppCompatActivity implements iMovieTitleOnClickListener {
     EditText titleEt;
@@ -62,30 +63,30 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,
                 null, response -> {
-                    try {
-                        JSONArray results = response.getJSONArray("Search");
-                        List<String> titles = new ArrayList<>();
-                        for (int i = 0; i < results.length(); i++) {
-                            JSONObject movie = results.getJSONObject(i);
-                            String title = movie.getString("Title");
-                            System.out.println("Title: " + title);
-                            titles.add(title);
-                        }
+            try {
+                JSONArray results = response.getJSONArray("Search");
+                List<String> titles = new ArrayList<>();
+                for (int i = 0; i < results.length(); i++) {
+                    JSONObject movie = results.getJSONObject(i);
+                    String title = movie.getString("Title");
+                    System.out.println("Title: " + title);
+                    titles.add(title);
+                }
 
-                        String total = response.getString("totalResults");
-                        System.out.println("Total " + total);
+                String total = response.getString("totalResults");
+                System.out.println("Total " + total);
 
-                        setTitlesInRecycler(titles);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        if (e.getMessage().equals("No value for Search")) {
-                            Toast.makeText(Advanced.this, "Zero results match your current search",
-                                    Toast.LENGTH_SHORT).show();
+                setTitlesInRecycler(titles);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                if (e.getMessage().equals("No value for Search")) {
+                    Toast.makeText(Advanced.this, "Zero results match your current search",
+                            Toast.LENGTH_SHORT).show();
 
-                            adapter.emptyList();
-                        }
-                    }
-                }, error -> Log.d("Volley Error Response", error.getMessage(), error));
+                    adapter.emptyList();
+                }
+            }
+        }, error -> Log.d("Volley Error Response", error.getMessage(), error));
         queue.add(jsonObjectRequest);
     }
 
@@ -112,31 +113,45 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,
                 null, response -> {
-                    try {
-                        String posterUrl = response.getString("Poster");
-                        System.out.println("Poster: " + posterUrl);
+            try {
+                String posterUrl = response.getString("Poster");
+                System.out.println("Poster: " + posterUrl);
 
-                        // opening URL connection on worker thread to not hang the UI
-                        Thread decodeImage = new Thread(() -> {
-                            try {
-                                URL url1 = new URL(posterUrl);
-                                Bitmap imageBitmap = BitmapFactory.decodeStream(url1.openConnection()
-                                        .getInputStream());
+                setImageFromUrl(posterUrl);
 
-                                recyclerView.setVisibility(View.INVISIBLE);
-                                runOnUiThread(() -> imageView.setImageBitmap(imageBitmap));
-                            } catch(IOException e) {
-                                e.printStackTrace();
-                            }
-                        });
-                        decodeImage.start();
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }, error -> Log.d("Volley Error Response", error.getMessage(), error));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> Log.d("Volley Error Response", error.getMessage(), error));
 
         queue.add(jsonObjectRequest);
+    }
+
+    private void setImageFromUrl(String url) {
+        CompletableFuture<Bitmap> completableFuture
+                = CompletableFuture.supplyAsync(() -> getBitmapFromUrl(url));
+
+        try {
+            Bitmap bitmap = completableFuture.get();
+            imageView.setImageBitmap(bitmap);
+            imageView.setTag(url);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private Bitmap getBitmapFromUrl(String url) {
+        Bitmap imageBitmap = null;
+        try {
+            URL url1 = new URL(url);
+            imageBitmap = BitmapFactory.decodeStream(url1.openConnection().getInputStream());
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        recyclerView.setVisibility(View.INVISIBLE);
+        return imageBitmap;
     }
 
     public void imageViewOnClick(View view) {
@@ -145,5 +160,18 @@ public class Advanced extends AppCompatActivity implements iMovieTitleOnClickLis
 
         // show recycler when image is hidden
         recyclerView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("imageUrl", imageView.getTag().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        String url = savedInstanceState.getString("imageUrl");
+        setImageFromUrl(url);
     }
 }
