@@ -1,8 +1,10 @@
 package com.example.assignment2;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -52,6 +54,22 @@ public class SearchActors extends AppCompatActivity {
                 });
             }
         }).start();
+    }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (!TextUtils.isEmpty(results.getText())) {
+            outState.putString("results", results.getText().toString());
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        if (savedInstanceState.containsKey("results")) {
+            results.setText(savedInstanceState.getString("results"));
+        }
     }
 }
