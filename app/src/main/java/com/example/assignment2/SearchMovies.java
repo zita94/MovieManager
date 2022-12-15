@@ -85,7 +85,7 @@ public class SearchMovies extends AppCompatActivity {
                     String plot = response.getString("Plot");
 
                     String output = "Title: " + title + "\nYear: " + year + "\nRated: " + rated +
-                            "\nReleased: " + released + "\nRuntime: " + runtime + "\nGenre" +
+                            "\nReleased: " + released + "\nRuntime: " + runtime + "\nGenre: " +
                             genre + "\nDirector: " + director + "\nWriter: " + writer +
                             "\nActors: " + actors + "\nPlot: " + plot;
 

@@ -132,7 +132,7 @@
             android:inputType="textPersonName"
             app:layout_constraintBaseline_toBaselineOf="@+id/add_tv_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/add_tv_title" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/add_et_year"
@@ -142,7 +142,7 @@
             android:inputType="number"
             app:layout_constraintBaseline_toBaselineOf="@+id/add_tv_year"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/add_tv_year" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/add_et_rated"
@@ -152,7 +152,7 @@
             android:inputType="textPersonName"
             app:layout_constraintBaseline_toBaselineOf="@+id/add_tv_rated"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/add_tv_rated" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/add_et_released"
@@ -162,7 +162,7 @@
             android:inputType="textPersonName"
             app:layout_constraintBaseline_toBaselineOf="@+id/add_tv_released"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/add_tv_released" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/add_et_runtime"
@@ -172,7 +172,7 @@
             android:inputType="textPersonName"
             app:layout_constraintBaseline_toBaselineOf="@+id/add_tv_runtime"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/add_tv_runtime" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/add_et_genre"
@@ -182,7 +182,7 @@
             android:inputType="textPersonName"
             app:layout_constraintBaseline_toBaselineOf="@+id/add_tv_genre"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/add_tv_genre" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/add_et_director"
@@ -192,7 +192,7 @@
             android:inputType="textPersonName"
             app:layout_constraintBaseline_toBaselineOf="@+id/add_tv_director"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/add_tv_director" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/add_et_writer"
@@ -202,7 +202,7 @@
             android:inputType="textPersonName"
             app:layout_constraintBaseline_toBaselineOf="@+id/add_tv_writer"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/add_tv_writer" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/add_et_actors"
@@ -212,7 +212,7 @@
             android:inputType="textPersonName"
             app:layout_constraintBaseline_toBaselineOf="@+id/add_tv_actors"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/add_tv_actors" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/add_et_plot"
@@ -222,7 +222,7 @@
             android:inputType="textPersonName"
             app:layout_constraintBaseline_toBaselineOf="@+id/add_tv_plot"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/add_tv_plot" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/add_btn_save"
