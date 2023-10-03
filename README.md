@@ -23,4 +23,5 @@ The screenshots below show the application running, as well as some specific add
 Unfortunately, the functionality and UI constraints for this assignment were very strict, so I'd like to go back and modernise the functionality and UI in the future. 
 
 ##
+Final Grade: 92  
 COM594 Mobile Technology Assignment 2
