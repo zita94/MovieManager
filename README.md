@@ -1,4 +1,4 @@
-# COM594_Assignment2
+# MovieManager
 
 For this assignment, I was tasked with creating an Android application to retrieve and store movie information.
 
